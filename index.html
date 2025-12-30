@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manus - 你的 AI 数字员工 | 自主执行任务的通用 AI 代理</title>
+    <meta name="description" content="Manus 是一款主打"自主执行任务"的通用型 AI 代理，交付结果而非提供建议。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', system-ui, sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        /* Gradient Backgrounds */
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c4a6e 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-gradient {
+            background: linear-gradient(145deg, rgba(30, 58, 95, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.1);
+        }
+        .glow-blue {
+            box-shadow: 0 0 60px rgba(96, 165, 250, 0.3);
+        }
+        .glow-purple {
+            box-shadow: 0 0 40px rgba(167, 139, 250, 0.2);
+        }
+
+        /* Particle Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(96, 165, 250, 0.8); }
+        }
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-slide-up { animation: slide-up 0.8s ease-out forwards; }
+        .animate-fade-in { animation: fade-in 1s ease-out forwards; }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Feature Cards Hover */
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.15);
+        }
+
+        /* Pricing Cards */
+        .pricing-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pricing-card:hover {
+            transform: scale(1.02);
+        }
+        .pricing-card.popular {
+            border: 2px solid rgba(96, 165, 250, 0.6);
+            box-shadow: 0 0 50px rgba(96, 165, 250, 0.3);
+        }
+
+        /* FAQ Accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+        .faq-content.open {
+            max-height: 500px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Comparison Table */
+        .comparison-table tr {
+            transition: background 0.3s ease;
+        }
+        .comparison-table tbody tr:hover {
+            background: rgba(96, 165, 250, 0.05);
+        }
+
+        /* Testimonial Cards */
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.1);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.4);
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.3), transparent);
+        }
+
+        /* Icon Container */
+        .icon-container {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-100 overflow-x-hidden">
+    <!-- Particle Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold gradient-text">Manus</a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="nav-link text-gray-300 hover:text-white transition-colors">核心特点</a>
+                    <a href="#comparison" class="nav-link text-gray-300 hover:text-white transition-colors">能力对比</a>
+                    <a href="#scenarios" class="nav-link text-gray-300 hover:text-white transition-colors">使用场景</a>
+                    <a href="#pricing" class="nav-link text-gray-300 hover:text-white transition-colors">价格方案</a>
+                    <a href="#faq" class="nav-link text-gray-300 hover:text-white transition-colors">常见问题</a>
+                    <a href="https://manus.im" target="_blank" class="cta-button px-6 py-2 rounded-full text-white font-medium">
+                        立即体验
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-slate-900/95 backdrop-blur-lg md:hidden">
+            <div class="p-6">
+                <button id="close-menu-btn" class="absolute top-4 right-4 text-gray-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                <div class="flex flex-col space-y-6 mt-12">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors">核心特点</a>
+                    <a href="#comparison" class="text-gray-300 hover:text-white transition-colors">能力对比</a>
+                    <a href="#scenarios" class="text-gray-300 hover:text-white transition-colors">使用场景</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors">价格方案</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors">常见问题</a>
+                    <a href="https://manus.im" target="_blank" class="cta-button px-6 py-3 rounded-full text-white font-medium text-center">
+                        立即体验
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 px-4">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <!-- Badge -->
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/20 mb-8 animate-fade-in">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                <span class="text-sm text-gray-300">被 Meta 以超过 20 亿美元收购</span>
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
+                <span class="text-white">你的 AI </span>
+                <span class="gradient-text">数字员工</span>
+            </h1>
+
+            <!-- Subheading -->
+            <p class="text-lg sm:text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-8 animate-slide-up" style="animation-delay: 0.2s">
+                不再只是聊天，而是<span class="text-blue-400 font-medium">交付结果</span>。
+                <br class="hidden sm:block">
+                给 Manus 一个目标，它会自己去搜索、分析、执行，最终完成任务。
+            </p>
+
+            <!-- Description -->
+            <p class="text-gray-500 max-w-2xl mx-auto mb-12 animate-slide-up" style="animation-delay: 0.4s">
+                Manus 是一款由中国团队 Butterfly Effect 开发的通用型 AI 代理，
+                在 GAIA 基准测试中创下全球最高水平性能记录。
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style="animation-delay: 0.6s">
+                <a href="https://manus.im" target="_blank" class="cta-button px-8 py-4 rounded-full text-white font-semibold text-lg flex items-center group">
+                    免费开始使用
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </a>
+                <a href="#features" class="px-8 py-4 rounded-full border border-gray-600 text-gray-300 font-semibold text-lg hover:border-blue-400 hover:text-white transition-all">
+                    了解更多
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-8 mt-20 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.8s">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold gradient-text">20亿+</div>
+                    <div class="text-sm text-gray-500 mt-1">美元收购估值</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold gradient-text">GAIA</div>
+                    <div class="text-sm text-gray-500 mt-1">全球最高性能</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold gradient-text">2025</div>
+                    <div class="text-sm text-gray-500 mt-1">年度 AI 代理</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">为什么选择 </span>
+                    <span class="gradient-text">Manus？</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    从"对话"到"执行"的质变，让 AI 真正成为你的生产力工具
+                </p>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card card-gradient rounded-2xl p-8 reveal">
+                    <div class="icon-container w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">多代理协作架构</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        内部将任务拆解给不同的"小组"协同工作——搜索组、分析组、代码组各司其职，
+                        像一个真正的专业团队在为你服务。
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card card-gradient rounded-2xl p-8 reveal" style="animation-delay: 0.1s">
+                    <div class="icon-container w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">闭环执行能力</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        内置云端沙盒环境，能直接编写并运行代码、浏览实时网页。
+                        代码报错了？它会自己查看日志、修改代码直到运行成功。
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card card-gradient rounded-2xl p-8 reveal" style="animation-delay: 0.2s">
+                    <div class="icon-container w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">高度自主性</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        你只需提供一个模糊的目标，它会自动拆解步骤并执行。
+                        关掉电脑，等它发邮件通知你"活干完了"。
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card card-gradient rounded-2xl p-8 reveal" style="animation-delay: 0.3s">
+                    <div class="icon-container w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">可视化执行过程</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        实时展示正在操作的浏览器界面和终端窗口，
+                        让你清楚看到它如何一步步完成任务——真正的"所见即所得"。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="py-24 px-4 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">Manus vs </span>
+                    <span class="gradient-text">传统 AI</span>
+                </h2>
+                <p class="text-gray-400 text-lg">
+                    看看区别在哪里
+                </p>
+            </div>
+
+            <div class="card-gradient rounded-2xl p-8 md:p-12 overflow-x-auto reveal">
+                <table class="comparison-table w-full min-w-[600px]">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="text-left py-4 px-4 text-gray-400 font-medium">能力维度</th>
+                            <th class="text-center py-4 px-4 text-blue-400 font-bold text-lg">Manus</th>
+                            <th class="text-center py-4 px-4 text-gray-500 font-medium">传统 AI 聊天机器人</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-4 px-4 text-white">核心定位</td>
+                            <td class="text-center py-4 px-4 text-blue-300 font-medium">交付结果</td>
+                            <td class="text-center py-4 px-4 text-gray-500">提供建议</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-4 px-4 text-white">执行能力</td>
+                            <td class="text-center py-4 px-4"><span class="text-green-400">✓</span> 可直接操作工具</td>
+                            <td class="text-center py-4 px-4"><span class="text-red-400">✗</span> 只能输出文字</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-4 px-4 text-white">任务处理</td>
+                            <td class="text-center py-4 px-4"><span class="text-green-400">✓</span> 自动拆解执行</td>
+                            <td class="text-center py-4 px-4"><span class="text-red-400">✗</span> 需要人工逐步指导</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-4 px-4 text-white">闭环反馈</td>
+                            <td class="text-center py-4 px-4"><span class="text-green-400">✓</span> 自动试错纠错</td>
+                            <td class="text-center py-4 px-4"><span class="text-red-400">✗</span> 无法验证结果</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-4 px-4 text-white">长任务支持</td>
+                            <td class="text-center py-4 px-4"><span class="text-green-400">✓</span> 异步长时执行</td>
+                            <td class="text-center py-4 px-4"><span class="text-red-400">✗</span> 上下文有限</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 text-white">使用门槛</td>
+                            <td class="text-center py-4 px-4 text-blue-300">零代码，自然语言</td>
+                            <td class="text-center py-4 px-4 text-gray-500">需要提示词技巧</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Example Box -->
+            <div class="mt-12 grid md:grid-cols-2 gap-8 reveal">
+                <div class="card-gradient rounded-xl p-6">
+                    <div class="text-red-400 text-sm font-medium mb-3">❌ 错误指令示例</div>
+                    <div class="text-gray-300 italic">
+                        "帮我搜一下什么是低空经济。"
+                    </div>
+                    <div class="text-gray-500 text-sm mt-3">
+                        → 这只是把它当成了搜索工具，浪费了它的能力
+                    </div>
+                </div>
+                <div class="card-gradient rounded-xl p-6 border border-green-500/30">
+                    <div class="text-green-400 text-sm font-medium mb-3">✓ 正确指令示例</div>
+                    <div class="text-gray-300 italic">
+                        "帮我调研低空经济行业的头部公司，对比他们的营收数据，并用表格形式输出，最后帮我生成一份行业分析报告的初稿。"
+                    </div>
+                    <div class="text-gray-500 text-sm mt-3">
+                        → 让它发挥真正的"数字员工"能力
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scenarios Section -->
+    <section id="scenarios" class="py-24 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">能帮你做 </span>
+                    <span class="gradient-text">什么？</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    从繁琐的重复工作到复杂的分析任务，让 Manus 帮你节省时间
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Scenario 1 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal">
+                    <div class="text-4xl mb-4">🔍</div>
+                    <h3 class="text-xl font-bold text-white mb-2">深度调研</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        对比市场上 5 款主流大模型的定价和技术参数，给出选择建议
+                    </p>
+                </div>
+
+                <!-- Scenario 2 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.1s">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-white mb-2">数据处理</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        上传 Excel，清洗无效数据，根据销售额生成可视化饼图
+                    </p>
+                </div>
+
+                <!-- Scenario 3 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.2s">
+                    <div class="text-4xl mb-4">💻</div>
+                    <h3 class="text-xl font-bold text-white mb-2">编程与部署</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        写一个倒计时网页代码，并直接部署上线让你能看到效果
+                    </p>
+                </div>
+
+                <!-- Scenario 4 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.3s">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold text-white mb-2">自动化办公</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        监控股票价格，一旦跌破 X 元，自动发邮件通知你
+                    </p>
+                </div>
+
+                <!-- Scenario 5 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.4s">
+                    <div class="text-4xl mb-4">📈</div>
+                    <h3 class="text-xl font-bold text-white mb-2">竞品分析</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        调研 10 家竞争对手，整理数据表格，生成分析报告 PPT
+                    </p>
+                </div>
+
+                <!-- Scenario 6 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.5s">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-xl font-bold text-white mb-2">网页抓取</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        抓取某电商网站的动态价格数据，分析趋势并生成图表
+                    </p>
+                </div>
+
+                <!-- Scenario 7 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.6s">
+                    <div class="text-4xl mb-4">📝</div>
+                    <h3 class="text-xl font-bold text-white mb-2">文档生成</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        根据调研结果自动生成格式规范的行业报告初稿
+                    </p>
+                </div>
+
+                <!-- Scenario 8 -->
+                <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.7s">
+                    <div class="text-4xl mb-4">🔧</div>
+                    <h3 class="text-xl font-bold text-white mb-2">代码审计</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        分析 GitHub 仓库代码，找出潜在问题并给出优化建议
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">选择适合你的 </span>
+                    <span class="gradient-text">方案</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    从免费试用到企业级方案，满足不同需求
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Free Plan -->
+                <div class="pricing-card card-gradient rounded-2xl p-6 reveal">
+                    <div class="text-gray-400 font-medium mb-2">免费版</div>
+                    <div class="text-4xl font-bold text-white mb-1">$0</div>
+                    <div class="text-gray-500 text-sm mb-6">永久免费</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            每日 1 次免费任务
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            约 300 积分/天
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            标准处理速度
+                        </li>
+                    </ul>
+                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full border border-gray-600 text-gray-300 font-medium hover:border-blue-400 hover:text-white transition-all">
+                        开始使用
+                    </a>
+                </div>
+
+                <!-- Basic Plan -->
+                <div class="pricing-card card-gradient rounded-2xl p-6 reveal" style="animation-delay: 0.1s">
+                    <div class="text-blue-400 font-medium mb-2">基础版</div>
+                    <div class="text-4xl font-bold text-white mb-1">$19</div>
+                    <div class="text-gray-500 text-sm mb-6">/月</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            约 1900 积分/月
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            每天 2-3 个中等任务
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            云端浏览器 + 代码沙盒
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            完整核心功能
+                        </li>
+                    </ul>
+                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full cta-button text-white font-medium">
+                        最推荐
+                    </a>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="pricing-card popular card-gradient rounded-2xl p-6 reveal relative" style="animation-delay: 0.2s">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold px-4 py-1 rounded-full">
+                            性价比最高
+                        </span>
+                    </div>
+                    <div class="text-purple-400 font-medium mb-2">专业版</div>
+                    <div class="text-4xl font-bold text-white mb-1">$49</div>
+                    <div class="text-gray-500 text-sm mb-6">/月</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            约 5000 积分/月
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            高优先级排队
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            支持长时任务
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            更高数据隔离级别
+                        </li>
+                    </ul>
+                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full cta-button text-white font-medium">
+                        立即升级
+                    </a>
+                </div>
+
+                <!-- Team Plan -->
+                <div class="pricing-card card-gradient rounded-2xl p-6 reveal" style="animation-delay: 0.3s">
+                    <div class="text-cyan-400 font-medium mb-2">团队版</div>
+                    <div class="text-4xl font-bold text-white mb-1">定制</div>
+                    <div class="text-gray-500 text-sm mb-6">联系销售</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            积分共享池
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            多人协作功能
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            企业级数据加密
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm">
+                            <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            专属技术支持
+                        </li>
+                    </ul>
+                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full border border-gray-600 text-gray-300 font-medium hover:border-cyan-400 hover:text-white transition-all">
+                        联系我们
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tip -->
+            <div class="mt-12 text-center reveal">
+                <div class="inline-flex items-start bg-blue-500/10 border border-blue-400/20 rounded-xl p-4 max-w-2xl">
+                    <svg class="w-6 h-6 text-blue-400 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                    <div class="text-left text-sm text-gray-400">
+                        <span class="text-blue-400 font-medium">省积分小技巧：</span>
+                        指令尽量精准，提供具体网址引导；善用知识库功能存储常用参考资料，减少重复搜索。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">用户 </span>
+                    <span class="gradient-text">真实评价</span>
+                </h2>
+                <p class="text-gray-400 text-lg">
+                    两极分化的客观反馈
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Positive Review 1 -->
+                <div class="testimonial-card card-gradient rounded-2xl p-6 reveal">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-green-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        "交互体验的降维打击！你能看到它自己打开浏览器、搜索、点开网页，像有一个真的在工作的员工。这种掌控感太强了。"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold">
+                            P
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-white font-medium">产品经理</div>
+                            <div class="text-gray-500 text-sm">互联网公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Positive Review 2 -->
+                <div class="testimonial-card card-gradient rounded-2xl p-6 reveal" style="animation-delay: 0.1s">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-green-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        "对于不懂编程的普通人来说，这真的是生产力神器。一个指令，它能自己跑完调研、分析、生成报告的全流程。"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-orange-500 flex items-center justify-center text-white font-bold">
+                            W
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-white font-medium">自由职业者</div>
+                            <div class="text-gray-500 text-sm">咨询行业</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Critical Review -->
+                <div class="testimonial-card card-gradient rounded-2xl p-6 reveal" style="animation-delay: 0.2s">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        "速度太慢了，一个复杂任务要等 20 分钟。而且积分消耗很快，免费额度根本不够用。希望后续能优化效率。"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white font-bold">
+                            D
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-white font-medium">开发者</div>
+                            <div class="text-gray-500 text-sm">技术行业</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="mt-12 text-center reveal">
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    <span class="text-blue-400 font-medium">总结：</span>
+                    Manus 不是万能的，但它是目前市面上把"AI 帮你干活"这件事做得最直观、用户体验最好的产品。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 px-4 relative z-10">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">常见 </span>
+                    <span class="gradient-text">问题</span>
+                </h2>
+                <p class="text-gray-400 text-lg">
+                    关于 Manus 的疑问解答
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="card-gradient rounded-xl overflow-hidden reveal">
+                    <button class="faq-button w-full px-6 py-5 text-left flex items-center justify-between">
+                        <span class="text-white font-medium">现在还需要邀请码吗？</span>
+                        <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 text-gray-400">
+                        <div class="pb-5">
+                            自 2025 年 5 月起，Manus 已逐步取消"一码难求"的严格限制，目前已开放注册。
+                            你只需前往 <a href="https://manus.im" target="_blank" class="text-blue-400 hover:underline">manus.im</a> 使用邮箱注册即可。
+                            不过新用户可能会进入短期的等待队列以平衡服务器压力。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="card-gradient rounded-xl overflow-hidden reveal" style="animation-delay: 0.1s">
+                    <button class="faq-button w-full px-6 py-5 text-left flex items-center justify-between">
+                        <span class="text-white font-medium">Manus 是免费的吗？</span>
+                        <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 text-gray-400">
+                        <div class="pb-5">
+                            不完全免费。Manus 采用"每日免费额度 + 订阅积分制"：
+                            <ul class="mt-3 space-y-2">
+                                <li>• <span class="text-white">免费用户</span>：每天约 1 次免费任务机会（约 300 积分）</li>
+                                <li>• <span class="text-white">基础版 ($19/月)</span>：约 1900 积分</li>
+                                <li>• <span class="text-white">专业版 ($49/月)</span>：约 5000 积分，支持高优先级排队</li>
+                            </ul>
+                            <p class="mt-3">由于 Manus 调用云端浏览器和沙盒环境，算力成本较高，因此采用积分制。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="card-gradient rounded-xl overflow-hidden reveal" style="animation-delay: 0.2s">
+                    <button class="faq-button w-full px-6 py-5 text-left flex items-center justify-between">
+                        <span class="text-white font-medium">为什么跑一个任务要花这么多积分？</span>
+                        <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 text-gray-400">
+                        <div class="pb-5">
+                            因为 Manus 背后不仅是聊天，它还调用了云端浏览器、执行沙盒和多步推理。
+                            一个复杂的调研任务（如持续 40 分钟的深度分析）可能会消耗 600-800 积分。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="card-gradient rounded-xl overflow-hidden reveal" style="animation-delay: 0.3s">
+                    <button class="faq-button w-full px-6 py-5 text-left flex items-center justify-between">
+                        <span class="text-white font-medium">任务执行到一半报错怎么办？</span>
+                        <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 text-gray-400">
+                        <div class="pb-5">
+                            这通常是服务器负载过高或网络波动引起的。你可以点击"Retry（重试）"。
+                            如果是因为平台系统故障导致的失败，你可以向客服提交任务链接，官方通常会退还消耗的积分。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="card-gradient rounded-xl overflow-hidden reveal" style="animation-delay: 0.4s">
+                    <button class="faq-button w-full px-6 py-5 text-left flex items-center justify-between">
+                        <span class="text-white font-medium">我上传的文件和数据安全吗？</span>
+                        <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 text-gray-400">
+                        <div class="pb-5">
+                            官方声明会对数据进行加密，且 Pro 用户拥有更高的数据隔离级别。
+                            但作为 AI 代理，它在执行任务时会将必要信息发送给底层大模型。
+                            <span class="text-yellow-400">强烈建议不要上传涉及公司机密、个人密码等极度敏感的数据。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="card-gradient rounded-xl overflow-hidden reveal" style="animation-delay: 0.5s">
+                    <button class="faq-button w-full px-6 py-5 text-left flex items-center justify-between">
+                        <span class="text-white font-medium">如何下达指令效果更好？</span>
+                        <svg class="faq-icon w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 text-gray-400">
+                        <div class="pb-5">
+                            提供明确的目标而不是琐碎的步骤：
+                            <ul class="mt-3 space-y-2">
+                                <li>• <span class="text-red-400">错误</span>："帮我搜一下什么是低空经济"</li>
+                                <li>• <span class="text-green-400">正确</span>："帮我调研低空经济行业的头部公司，对比营收数据，用表格输出并生成分析报告"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="card-gradient rounded-3xl p-8 md:p-12 text-center glow-blue reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+                    准备好体验 AI 数字员工了吗？
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+                    从今天开始，让繁琐的工作交给 Manus，你专注于更有价值的事情。
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://manus.im" target="_blank" class="cta-button px-8 py-4 rounded-full text-white font-semibold text-lg">
+                        免费开始使用
+                    </a>
+                    <a href="#features" class="px-8 py-4 rounded-full border border-gray-600 text-gray-300 font-semibold hover:border-blue-400 hover:text-white transition-all">
+                        了解更多功能
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-gray-800 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="text-2xl font-bold gradient-text mb-4">Manus</div>
+                    <p class="text-gray-500 text-sm">
+                        你的 AI 数字员工<br>
+                        交付结果，而非提供建议
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">产品</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="text-gray-500 hover:text-blue-400 transition-colors">核心特点</a></li>
+                        <li><a href="#pricing" class="text-gray-500 hover:text-blue-400 transition-colors">价格方案</a></li>
+                        <li><a href="https://manus.im" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors">官方网站</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">资源</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#faq" class="text-gray-500 hover:text-blue-400 transition-colors">常见问题</a></li>
+                        <li><a href="#scenarios" class="text-gray-500 hover:text-blue-400 transition-colors">使用场景</a></li>
+                        <li><a href="https://manus.im" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors">帮助中心</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-600 text-sm">
+                <p>© 2025 Manus. 本站为介绍性网站，非官方网站。</p>
+                <p class="mt-2">Manus 是由 Butterfly Effect（蝴蝶效应）开发的 AI 代理产品，已被 Meta 收购。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Particle Background
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 80;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(96, 165, 250, ${0.1 * (1 - distance / 150)})`;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                if (rect.top < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Navbar Background on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-slate-900/90', 'backdrop-blur-lg', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-slate-900/90', 'backdrop-blur-lg', 'shadow-lg');
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // FAQ Accordion
+        const faqButtons = document.querySelectorAll('.faq-button');
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+
+                // Close all other FAQ items
+                faqButtons.forEach(otherButton => {
+                    if (otherButton !== button) {
+                        otherButton.nextElementSibling.classList.remove('open');
+                        otherButton.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current FAQ item
+                content.classList.toggle('open');
+                icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
