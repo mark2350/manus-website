@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manus - 你的 AI 数字员工 | 自主执行任务的通用 AI 代理</title>
-    <meta name="description" content="Manus 是一款主打"自主执行任务"的通用型 AI 代理，交付结果而非提供建议。">
+    <title>Manus - Your AI Digital Employee | General Purpose AI Agent That Delivers Results</title>
+    <meta name="description" content="Manus is a general-purpose AI agent focused on autonomous task execution. It delivers results, not just suggestions.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -221,12 +221,36 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="nav-link text-gray-300 hover:text-white transition-colors">核心特点</a>
-                    <a href="#comparison" class="nav-link text-gray-300 hover:text-white transition-colors">能力对比</a>
-                    <a href="#scenarios" class="nav-link text-gray-300 hover:text-white transition-colors">使用场景</a>
-                    <a href="#pricing" class="nav-link text-gray-300 hover:text-white transition-colors">价格方案</a>
-                    <a href="#faq" class="nav-link text-gray-300 hover:text-white transition-colors">常见问题</a>
-                    <a href="https://manus.im" target="_blank" class="cta-button px-6 py-2 rounded-full text-white font-medium">
+                    <a href="#features" class="nav-link text-gray-300 hover:text-white transition-colors" data-i18n="nav.features">核心特点</a>
+                    <a href="#comparison" class="nav-link text-gray-300 hover:text-white transition-colors" data-i18n="nav.comparison">能力对比</a>
+                    <a href="#scenarios" class="nav-link text-gray-300 hover:text-white transition-colors" data-i18n="nav.scenarios">使用场景</a>
+                    <a href="#pricing" class="nav-link text-gray-300 hover:text-white transition-colors" data-i18n="nav.pricing">价格方案</a>
+                    <a href="#faq" class="nav-link text-gray-300 hover:text-white transition-colors" data-i18n="nav.faq">常见问题</a>
+
+                    <!-- Language Switcher -->
+                    <div class="relative group">
+                        <button id="lang-toggle" class="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                            </svg>
+                            <span id="current-lang" class="text-sm font-medium">中文</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-40 bg-slate-800 rounded-xl shadow-xl border border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <button onclick="setLanguage('zh')" class="w-full px-4 py-3 text-left text-gray-300 hover:bg-white/5 hover:text-white transition-colors rounded-t-xl flex items-center space-x-2">
+                                <span class="text-lg">🇨🇳</span>
+                                <span>简体中文</span>
+                            </button>
+                            <button onclick="setLanguage('en')" class="w-full px-4 py-3 text-left text-gray-300 hover:bg-white/5 hover:text-white transition-colors rounded-b-xl flex items-center space-x-2">
+                                <span class="text-lg">🇺🇸</span>
+                                <span>English</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <a href="https://manus.im" target="_blank" class="cta-button px-6 py-2 rounded-full text-white font-medium" data-i18n="nav.cta">
                         立即体验
                     </a>
                 </div>
@@ -1045,6 +1069,424 @@
     </footer>
 
     <script>
+        // ============================================
+        // Multi-Language Translation System
+        // ============================================
+        const translations = {
+            zh: {
+                // Navigation
+                'nav.features': '核心特点',
+                'nav.comparison': '能力对比',
+                'nav.scenarios': '使用场景',
+                'nav.pricing': '价格方案',
+                'nav.faq': '常见问题',
+                'nav.cta': '立即体验',
+
+                // Hero Section
+                'hero.badge': '被 Meta 以超过 20 亿美元收购',
+                'hero.title1': '你的 AI ',
+                'hero.title2': '数字员工',
+                'hero.subtitle1': '不再只是聊天，而是',
+                'hero.subtitle2': '交付结果',
+                'hero.subtitle3': '。给 Manus 一个目标，它会自己去搜索、分析、执行，最终完成任务。',
+                'hero.description': 'Manus 是一款由中国团队 Butterfly Effect 开发的通用型 AI 代理，在 GAIA 基准测试中创下全球最高水平性能记录。',
+                'hero.cta1': '免费开始使用',
+                'hero.cta2': '了解更多',
+                'hero.stat1': '20亿+',
+                'hero.stat1Label': '美元收购估值',
+                'hero.stat2': 'GAIA',
+                'hero.stat2Label': '全球最高性能',
+                'hero.stat3': '2025',
+                'hero.stat3Label': '年度 AI 代理',
+
+                // Features Section
+                'features.title': '为什么选择 ',
+                'features.titleHighlight': 'Manus？',
+                'features.subtitle': '从"对话"到"执行"的质变，让 AI 真正成为你的生产力工具',
+                'features.1.title': '多代理协作架构',
+                'features.1.desc': '内部将任务拆解给不同的"小组"协同工作——搜索组、分析组、代码组各司其职，像一个真正的专业团队在为你服务。',
+                'features.2.title': '闭环执行能力',
+                'features.2.desc': '内置云端沙盒环境，能直接编写并运行代码、浏览实时网页。代码报错了？它会自己查看日志、修改代码直到运行成功。',
+                'features.3.title': '高度自主性',
+                'features.3.desc': '你只需提供一个模糊的目标，它会自动拆解步骤并执行。关掉电脑，等它发邮件通知你"活干完了"。',
+                'features.4.title': '可视化执行过程',
+                'features.4.desc': '实时展示正在操作的浏览器界面和终端窗口，让你清楚看到它如何一步步完成任务——真正的"所见即所得"。',
+
+                // Comparison Section
+                'comparison.title': 'Manus vs ',
+                'comparison.titleHighlight': '传统 AI',
+                'comparison.subtitle': '看看区别在哪里',
+                'comparison.table.header1': '能力维度',
+                'comparison.table.header2': 'Manus',
+                'comparison.table.header3': '传统 AI 聊天机器人',
+                'comparison.row1.col1': '核心定位',
+                'comparison.row1.col2': '交付结果',
+                'comparison.row1.col3': '提供建议',
+                'comparison.row2.col1': '执行能力',
+                'comparison.row2.col2': '可直接操作工具',
+                'comparison.row2.col3': '只能输出文字',
+                'comparison.row3.col1': '任务处理',
+                'comparison.row3.col2': '自动拆解执行',
+                'comparison.row3.col3': '需要人工逐步指导',
+                'comparison.row4.col1': '闭环反馈',
+                'comparison.row4.col2': '自动试错纠错',
+                'comparison.row4.col3': '无法验证结果',
+                'comparison.row5.col1': '长任务支持',
+                'comparison.row5.col2': '异步长时执行',
+                'comparison.row5.col3': '上下文有限',
+                'comparison.row6.col1': '使用门槛',
+                'comparison.row6.col2': '零代码，自然语言',
+                'comparison.row6.col3': '需要提示词技巧',
+                'comparison.exampleBad.title': '错误指令示例',
+                'comparison.exampleBad.text': '"帮我搜一下什么是低空经济。"',
+                'comparison.exampleBad.note': '→ 这只是把它当成了搜索工具，浪费了它的能力',
+                'comparison.exampleGood.title': '正确指令示例',
+                'comparison.exampleGood.text': '"帮我调研低空经济行业的头部公司，对比他们的营收数据，并用表格形式输出，最后帮我生成一份行业分析报告的初稿。"',
+                'comparison.exampleGood.note': '→ 让它发挥真正的"数字员工"能力',
+
+                // Scenarios Section
+                'scenarios.title': '能帮你做 ',
+                'scenarios.titleHighlight': '什么？',
+                'scenarios.subtitle': '从繁琐的重复工作到复杂的分析任务，让 Manus 帮你节省时间',
+                'scenarios.1.title': '深度调研',
+                'scenarios.1.desc': '对比市场上 5 款主流大模型的定价和技术参数，给出选择建议',
+                'scenarios.2.title': '数据处理',
+                'scenarios.2.desc': '上传 Excel，清洗无效数据，根据销售额生成可视化饼图',
+                'scenarios.3.title': '编程与部署',
+                'scenarios.3.desc': '写一个倒计时网页代码，并直接部署上线让你能看到效果',
+                'scenarios.4.title': '自动化办公',
+                'scenarios.4.desc': '监控股票价格，一旦跌破 X 元，自动发邮件通知你',
+                'scenarios.5.title': '竞品分析',
+                'scenarios.5.desc': '调研 10 家竞争对手，整理数据表格，生成分析报告 PPT',
+                'scenarios.6.title': '网页抓取',
+                'scenarios.6.desc': '抓取某电商网站的动态价格数据，分析趋势并生成图表',
+                'scenarios.7.title': '文档生成',
+                'scenarios.7.desc': '根据调研结果自动生成格式规范的行业报告初稿',
+                'scenarios.8.title': '代码审计',
+                'scenarios.8.desc': '分析 GitHub 仓库代码，找出潜在问题并给出优化建议',
+
+                // Pricing Section
+                'pricing.title': '选择适合你的 ',
+                'pricing.titleHighlight': '方案',
+                'pricing.subtitle': '从免费试用到企业级方案，满足不同需求',
+                'pricing.free.name': '免费版',
+                'pricing.free.price': '$0',
+                'pricing.free.period': '永久免费',
+                'pricing.free.f1': '每日 1 次免费任务',
+                'pricing.free.f2': '约 300 积分/天',
+                'pricing.free.f3': '标准处理速度',
+                'pricing.free.cta': '开始使用',
+                'pricing.basic.name': '基础版',
+                'pricing.basic.price': '$19',
+                'pricing.basic.period': '/月',
+                'pricing.basic.badge': '最推荐',
+                'pricing.basic.f1': '约 1900 积分/月',
+                'pricing.basic.f2': '每天 2-3 个中等任务',
+                'pricing.basic.f3': '云端浏览器 + 代码沙盒',
+                'pricing.basic.f4': '完整核心功能',
+                'pricing.basic.cta': '最推荐',
+                'pricing.pro.name': '专业版',
+                'pricing.pro.price': '$49',
+                'pricing.pro.period': '/月',
+                'pricing.pro.badge': '性价比最高',
+                'pricing.pro.f1': '约 5000 积分/月',
+                'pricing.pro.f2': '高优先级排队',
+                'pricing.pro.f3': '支持长时任务',
+                'pricing.pro.f4': '更高数据隔离级别',
+                'pricing.pro.cta': '立即升级',
+                'pricing.team.name': '团队版',
+                'pricing.team.price': '定制',
+                'pricing.team.period': '联系销售',
+                'pricing.team.f1': '积分共享池',
+                'pricing.team.f2': '多人协作功能',
+                'pricing.team.f3': '企业级数据加密',
+                'pricing.team.f4': '专属技术支持',
+                'pricing.team.cta': '联系我们',
+                'pricing.tip': '省积分小技巧：指令尽量精准，提供具体网址引导；善用知识库功能存储常用参考资料，减少重复搜索。',
+
+                // Testimonials Section
+                'testimonials.title': '用户 ',
+                'testimonials.titleHighlight': '真实评价',
+                'testimonials.subtitle': '两极分化的客观反馈',
+                'testimonials.1.text': '"交互体验的降维打击！你能看到它自己打开浏览器、搜索、点开网页，像有一个真的在工作的员工。这种掌控感太强了。"',
+                'testimonials.1.role': '产品经理',
+                'testimonials.1.company': '互联网公司',
+                'testimonials.2.text': '"对于不懂编程的普通人来说，这真的是生产力神器。一个指令，它能自己跑完调研、分析、生成报告的全流程。"',
+                'testimonials.2.role': '自由职业者',
+                'testimonials.2.company': '咨询行业',
+                'testimonials.3.text': '"速度太慢了，一个复杂任务要等 20 分钟。而且积分消耗很快，免费额度根本不够用。希望后续能优化效率。"',
+                'testimonials.3.role': '开发者',
+                'testimonials.3.company': '技术行业',
+                'testimonials.summary': '总结：',
+                'testimonials.summaryText': 'Manus 不是万能的，但它是目前市面上把"AI 帮你干活"这件事做得最直观、用户体验最好的产品。',
+
+                // FAQ Section
+                'faq.title': '常见 ',
+                'faq.titleHighlight': '问题',
+                'faq.subtitle': '关于 Manus 的疑问解答',
+                'faq.q1.question': '现在还需要邀请码吗？',
+                'faq.q1.answer': '自 2025 年 5 月起，Manus 已逐步取消"一码难求"的严格限制，目前已开放注册。你只需前往 manus.im 使用邮箱注册即可。不过新用户可能会进入短期的等待队列以平衡服务器压力。',
+                'faq.q2.question': 'Manus 是免费的吗？',
+                'faq.q2.answer': '不完全免费。Manus 采用"每日免费额度 + 订阅积分制"：免费用户每天约 1 次免费任务机会（约 300 积分），基础版 ($19/月) 约 1900 积分，专业版 ($49/月) 约 5000 积分，支持高优先级排队。由于 Manus 调用云端浏览器和沙盒环境，算力成本较高，因此采用积分制。',
+                'faq.q3.question': '为什么跑一个任务要花这么多积分？',
+                'faq.q3.answer': '因为 Manus 背后不仅是聊天，它还调用了云端浏览器、执行沙盒和多步推理。一个复杂的调研任务（如持续 40 分钟的深度分析）可能会消耗 600-800 积分。',
+                'faq.q4.question': '任务执行到一半报错怎么办？',
+                'faq.q4.answer': '这通常是服务器负载过高或网络波动引起的。你可以点击"Retry（重试）"。如果是因为平台系统故障导致的失败，你可以向客服提交任务链接，官方通常会退还消耗的积分。',
+                'faq.q5.question': '我上传的文件和数据安全吗？',
+                'faq.q5.answer': '官方声明会对数据进行加密，且 Pro 用户拥有更高的数据隔离级别。但作为 AI 代理，它在执行任务时会将必要信息发送给底层大模型。强烈建议不要上传涉及公司机密、个人密码等极度敏感的数据。',
+                'faq.q6.question': '如何下达指令效果更好？',
+                'faq.q6.answer': '提供明确的目标而不是琐碎的步骤。错误示例："帮我搜一下什么是低空经济"。正确示例："帮我调研低空经济行业的头部公司，对比营收数据，用表格输出并生成分析报告"',
+
+                // CTA Section
+                'cta.title': '准备好体验 AI 数字员工了吗？',
+                'cta.subtitle': '从今天开始，让繁琐的工作交给 Manus，你专注于更有价值的事情。',
+                'cta.button1': '免费开始使用',
+                'cta.button2': '了解更多功能',
+
+                // Footer
+                'footer.tagline': '你的 AI 数字员工',
+                'footer.tagline2': '交付结果，而非提供建议',
+                'footer.product': '产品',
+                'footer.resources': '资源',
+                'footer.follow': '关注我们',
+                'footer.link1': '核心特点',
+                'footer.link2': '价格方案',
+                'footer.link3': '官方网站',
+                'footer.link4': '常见问题',
+                'footer.link5': '使用场景',
+                'footer.link6': '帮助中心',
+                'footer.copyright': '© 2025 Manus. 本站为介绍性网站，非官方网站。',
+                'footer.copyright2': 'Manus 是由 Butterfly Effect（蝴蝶效应）开发的 AI 代理产品，已被 Meta 收购。'
+            },
+            en: {
+                // Navigation
+                'nav.features': 'Features',
+                'nav.comparison': 'Compare',
+                'nav.scenarios': 'Use Cases',
+                'nav.pricing': 'Pricing',
+                'nav.faq': 'FAQ',
+                'nav.cta': 'Try Now',
+
+                // Hero Section
+                'hero.badge': 'Acquired by Meta for Over $2 Billion',
+                'hero.title1': 'Your AI ',
+                'hero.title2': 'Digital Employee',
+                'hero.subtitle1': 'Not just chat, but ',
+                'hero.subtitle2': 'delivering results',
+                'hero.subtitle3': '. Give Manus a goal, and it will search, analyze, execute, and complete the task.',
+                'hero.description': 'Manus is a general-purpose AI agent developed by the Chinese team Butterfly Effect, achieving world-record performance on the GAIA benchmark.',
+                'hero.cta1': 'Start Free',
+                'hero.cta2': 'Learn More',
+                'hero.stat1': '$2B+',
+                'hero.stat1Label': 'Acquisition Value',
+                'hero.stat2': 'GAIA',
+                'hero.stat2Label': 'World-Leading Performance',
+                'hero.stat3': '2025',
+                'hero.stat3Label': 'AI Agent of the Year',
+
+                // Features Section
+                'features.title': 'Why Choose ',
+                'features.titleHighlight': 'Manus?',
+                'features.subtitle': 'From "conversation" to "execution" — making AI a true productivity tool',
+                'features.1.title': 'Multi-Agent Architecture',
+                'features.1.desc': 'Tasks are broken down and assigned to specialized teams — search, analysis, and coding groups working together like a professional team serving you.',
+                'features.2.title': 'Closed-Loop Execution',
+                'features.2.desc': 'Built-in cloud sandbox environment that can write and run code, browse real-time web pages. Code error? It checks logs, fixes code, and runs again until successful.',
+                'features.3.title': 'High Autonomy',
+                'features.3.desc': 'Just provide a vague goal, it automatically breaks down steps and executes. Close your computer, wait for the email notification: "job is done".',
+                'features.4.title': 'Visual Execution Process',
+                'features.4.desc': 'Real-time display of browser interface and terminal windows, showing you exactly how it completes tasks step by step — true "what you see is what you get".',
+
+                // Comparison Section
+                'comparison.title': 'Manus vs ',
+                'comparison.titleHighlight': 'Traditional AI',
+                'comparison.subtitle': 'See the difference',
+                'comparison.table.header1': 'Capability',
+                'comparison.table.header2': 'Manus',
+                'comparison.table.header3': 'Traditional AI Chatbots',
+                'comparison.row1.col1': 'Core Positioning',
+                'comparison.row1.col2': 'Delivers Results',
+                'comparison.row1.col3': 'Provides Suggestions',
+                'comparison.row2.col1': 'Execution Ability',
+                'comparison.row2.col2': 'Can Operate Tools Directly',
+                'comparison.row2.col3': 'Text Output Only',
+                'comparison.row3.col1': 'Task Processing',
+                'comparison.row3.col2': 'Auto Decompose & Execute',
+                'comparison.row3.col3': 'Requires Step-by-Step Guidance',
+                'comparison.row4.col1': 'Closed-Loop Feedback',
+                'comparison.row4.col2': 'Auto Trial & Error',
+                'comparison.row4.col3': 'Cannot Verify Results',
+                'comparison.row5.col1': 'Long Task Support',
+                'comparison.row5.col2': 'Async Long-Running',
+                'comparison.row5.col3': 'Limited Context',
+                'comparison.row6.col1': 'Usage Barrier',
+                'comparison.row6.col2': 'Zero Code, Natural Language',
+                'comparison.row6.col3': 'Requires Prompt Skills',
+                'comparison.exampleBad.title': 'Bad Prompt Example',
+                'comparison.exampleBad.text': '"Search what is low-altitude economy."',
+                'comparison.exampleBad.note': '→ This just uses it as a search tool, wasting its capabilities',
+                'comparison.exampleGood.title': 'Good Prompt Example',
+                'comparison.exampleGood.text': '"Research top companies in low-altitude economy, compare their revenue data, output as a table, and generate an industry analysis report draft."',
+                'comparison.exampleGood.note': '→ Let it unleash its true "digital employee" capabilities',
+
+                // Scenarios Section
+                'scenarios.title': 'What Can It Do ',
+                'scenarios.titleHighlight': 'For You?',
+                'scenarios.subtitle': 'From tedious repetitive work to complex analysis tasks, let Manus save you time',
+                'scenarios.1.title': 'Deep Research',
+                'scenarios.1.desc': 'Compare pricing and specs of 5 major LLMs, provide selection recommendations',
+                'scenarios.2.title': 'Data Processing',
+                'scenarios.2.desc': 'Upload Excel, clean invalid data, generate visualization charts from sales',
+                'scenarios.3.title': 'Coding & Deployment',
+                'scenarios.3.desc': 'Write countdown webpage code and deploy online for immediate viewing',
+                'scenarios.4.title': 'Office Automation',
+                'scenarios.4.desc': 'Monitor stock prices, auto-email you when it drops below X',
+                'scenarios.5.title': 'Competitive Analysis',
+                'scenarios.5.desc': 'Research 10 competitors, organize data tables, generate analysis report PPT',
+                'scenarios.6.title': 'Web Scraping',
+                'scenarios.6.desc': 'Scrape dynamic price data from e-commerce sites, analyze trends and generate charts',
+                'scenarios.7.title': 'Document Generation',
+                'scenarios.7.desc': 'Auto-generate properly formatted industry report drafts based on research',
+                'scenarios.8.title': 'Code Audit',
+                'scenarios.8.desc': 'Analyze GitHub repository code, find potential issues and optimization suggestions',
+
+                // Pricing Section
+                'pricing.title': 'Choose the Right ',
+                'pricing.titleHighlight': 'Plan',
+                'pricing.subtitle': 'From free trial to enterprise solutions, meeting different needs',
+                'pricing.free.name': 'Free',
+                'pricing.free.price': '$0',
+                'pricing.free.period': 'Forever Free',
+                'pricing.free.f1': '1 free task daily',
+                'pricing.free.f2': '~300 credits/day',
+                'pricing.free.f3': 'Standard processing speed',
+                'pricing.free.cta': 'Get Started',
+                'pricing.basic.name': 'Basic',
+                'pricing.basic.price': '$19',
+                'pricing.basic.period': '/month',
+                'pricing.basic.badge': 'Recommended',
+                'pricing.basic.f1': '~1900 credits/month',
+                'pricing.basic.f2': '2-3 medium tasks daily',
+                'pricing.basic.f3': 'Cloud browser + code sandbox',
+                'pricing.basic.f4': 'Full core features',
+                'pricing.basic.cta': 'Recommended',
+                'pricing.pro.name': 'Pro',
+                'pricing.pro.price': '$49',
+                'pricing.pro.period': '/month',
+                'pricing.pro.badge': 'Best Value',
+                'pricing.pro.f1': '~5000 credits/month',
+                'pricing.pro.f2': 'High priority queue',
+                'pricing.pro.f3': 'Support for long tasks',
+                'pricing.pro.f4': 'Higher data isolation',
+                'pricing.pro.cta': 'Upgrade Now',
+                'pricing.team.name': 'Team',
+                'pricing.team.price': 'Custom',
+                'pricing.team.period': 'Contact Sales',
+                'pricing.team.f1': 'Shared credit pool',
+                'pricing.team.f2': 'Multi-user collaboration',
+                'pricing.team.f3': 'Enterprise encryption',
+                'pricing.team.f4': 'Dedicated support',
+                'pricing.team.cta': 'Contact Us',
+                'pricing.tip': 'Credit-saving tip: Be precise with instructions, provide specific URLs; use knowledge base to store reference materials and reduce repetitive searches.',
+
+                // Testimonials Section
+                'testimonials.title': 'User ',
+                'testimonials.titleHighlight': 'Reviews',
+                'testimonials.subtitle': 'Objective feedback from both sides',
+                'testimonials.1.text': '"A game-changer in interaction! You can see it opening browsers, searching, clicking through pages — like having a real employee working. The sense of control is incredible."',
+                'testimonials.1.role': 'Product Manager',
+                'testimonials.1.company': 'Tech Company',
+                'testimonials.2.text': '"For non-programmers, this is a true productivity tool. One command, and it completes the full workflow of research, analysis, and report generation."',
+                'testimonials.2.role': 'Freelancer',
+                'testimonials.2.company': 'Consulting',
+                'testimonials.3.text': '"Too slow, complex tasks take 20 minutes. Credits drain fast, free allowance isn\'t enough. Hope they optimize efficiency."',
+                'testimonials.3.role': 'Developer',
+                'testimonials.3.company': 'Tech Industry',
+                'testimonials.summary': 'Summary: ',
+                'testimonials.summaryText': 'Manus isn\'t perfect, but it\'s currently the most intuitive and user-friendly product for "AI getting work done".',
+
+                // FAQ Section
+                'faq.title': 'Common ',
+                'faq.titleHighlight': 'Questions',
+                'faq.subtitle': 'Answers about Manus',
+                'faq.q1.question': 'Do I still need an invite code?',
+                'faq.q1.answer': 'Since May 2025, Manus has gradually lifted strict invite restrictions and is now open for registration. Just go to manus.im to sign up with email. New users may enter a brief waitlist to balance server load.',
+                'faq.q2.question': 'Is Manus free?',
+                'faq.q2.answer': 'Not entirely free. Manus uses "daily free allowance + subscription credits": Free users get ~1 free task daily (~300 credits), Basic ($19/mo) ~1900 credits, Pro ($49/mo) ~5000 credits with high priority. Due to cloud browser and sandbox costs, credits are required.',
+                'faq.q3.question': 'Why do tasks cost so many credits?',
+                'faq.q3.answer': 'Because Manus doesn\'t just chat — it calls cloud browsers, execution sandboxes, and multi-step reasoning. A complex research task (e.g., 40-minute deep analysis) may consume 600-800 credits.',
+                'faq.q4.question': 'What if a task fails midway?',
+                'faq.q4.answer': 'Usually due to server load or network issues. Click "Retry". If it\'s a platform failure, submit the task link to support — they typically refund consumed credits.',
+                'faq.q5.question': 'Are my uploaded files and data secure?',
+                'faq.q5.answer': 'Official statement: data is encrypted, Pro users get higher isolation. But as an AI agent, it sends necessary info to underlying models. Strongly recommend NOT uploading highly sensitive data like company secrets or passwords.',
+                'faq.q6.question': 'How to give better instructions?',
+                'faq.q6.answer': 'Provide clear goals, not trivial steps. Bad: "Search what is low-altitude economy". Good: "Research top low-altitude economy companies, compare revenue, output table and generate analysis report"',
+
+                // CTA Section
+                'cta.title': 'Ready to Experience Your AI Digital Employee?',
+                'cta.subtitle': 'Starting today, let Manus handle tedious work while you focus on what matters.',
+                'cta.button1': 'Start Free',
+                'cta.button2': 'Learn More Features',
+
+                // Footer
+                'footer.tagline': 'Your AI Digital Employee',
+                'footer.tagline2': 'Delivers Results, Not Just Suggestions',
+                'footer.product': 'Product',
+                'footer.resources': 'Resources',
+                'footer.follow': 'Follow Us',
+                'footer.link1': 'Features',
+                'footer.link2': 'Pricing',
+                'footer.link3': 'Official Site',
+                'footer.link4': 'FAQ',
+                'footer.link5': 'Use Cases',
+                'footer.link6': 'Help Center',
+                'footer.copyright': '© 2025 Manus. This is an informational website, not the official site.',
+                'footer.copyright2': 'Manus is an AI agent product developed by Butterfly Effect, acquired by Meta.'
+            }
+        };
+
+        let currentLanguage = 'zh';
+
+        // Auto-detect browser language
+        function detectLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang.startsWith('en')) {
+                return 'en';
+            }
+            return 'zh';
+        }
+
+        // Set language and update all text
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('manus-lang', lang);
+
+            // Update current lang display
+            const currentLangEl = document.getElementById('current-lang');
+            if (currentLangEl) {
+                currentLangEl.textContent = lang === 'zh' ? '中文' : 'English';
+            }
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for saved language preference, otherwise auto-detect
+            const savedLang = localStorage.getItem('manus-lang');
+            const initialLang = savedLang || detectLanguage();
+            setLanguage(initialLang);
+        });
+
         // Particle Background
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
