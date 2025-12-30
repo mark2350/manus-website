@@ -273,12 +273,12 @@
                     </svg>
                 </button>
                 <div class="flex flex-col space-y-6 mt-12">
-                    <a href="#features" class="text-gray-300 hover:text-white transition-colors">核心特点</a>
-                    <a href="#comparison" class="text-gray-300 hover:text-white transition-colors">能力对比</a>
-                    <a href="#scenarios" class="text-gray-300 hover:text-white transition-colors">使用场景</a>
-                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors">价格方案</a>
-                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors">常见问题</a>
-                    <a href="https://manus.im" target="_blank" class="cta-button px-6 py-3 rounded-full text-white font-medium text-center">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors" data-i18n="nav.features">核心特点</a>
+                    <a href="#comparison" class="text-gray-300 hover:text-white transition-colors" data-i18n="nav.comparison">能力对比</a>
+                    <a href="#scenarios" class="text-gray-300 hover:text-white transition-colors" data-i18n="nav.scenarios">使用场景</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors" data-i18n="nav.pricing">价格方案</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors" data-i18n="nav.faq">常见问题</a>
+                    <a href="https://manus.im" target="_blank" class="cta-button px-6 py-3 rounded-full text-white font-medium text-center" data-i18n="nav.cta">
                         立即体验
                     </a>
                 </div>
@@ -292,37 +292,36 @@
             <!-- Badge -->
             <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/20 mb-8 animate-fade-in">
                 <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                <span class="text-sm text-gray-300">被 Meta 以超过 20 亿美元收购</span>
+                <span class="text-sm text-gray-300" data-i18n="hero.badge">被 Meta 以超过 20 亿美元收购</span>
             </div>
 
             <!-- Main Heading -->
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
-                <span class="text-white">你的 AI </span>
-                <span class="gradient-text">数字员工</span>
+                <span class="text-white" data-i18n="hero.title1">你的 AI </span>
+                <span class="gradient-text" data-i18n="hero.title2">数字员工</span>
             </h1>
 
             <!-- Subheading -->
             <p class="text-lg sm:text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-8 animate-slide-up" style="animation-delay: 0.2s">
-                不再只是聊天，而是<span class="text-blue-400 font-medium">交付结果</span>。
+                <span data-i18n="hero.subtitle1">不再只是聊天，而是</span><span class="text-blue-400 font-medium" data-i18n="hero.subtitle2">交付结果</span><span data-i18n="hero.subtitle3">。</span>
                 <br class="hidden sm:block">
-                给 Manus 一个目标，它会自己去搜索、分析、执行，最终完成任务。
+                <span data-i18n="hero.subtitle3cont">给 Manus 一个目标，它会自己去搜索、分析、执行，最终完成任务。</span>
             </p>
 
             <!-- Description -->
-            <p class="text-gray-500 max-w-2xl mx-auto mb-12 animate-slide-up" style="animation-delay: 0.4s">
-                Manus 是一款由中国团队 Butterfly Effect 开发的通用型 AI 代理，
-                在 GAIA 基准测试中创下全球最高水平性能记录。
+            <p class="text-gray-500 max-w-2xl mx-auto mb-12 animate-slide-up" style="animation-delay: 0.4s" data-i18n="hero.description">
+                Manus 是一款由中国团队 Butterfly Effect 开发的通用型 AI 代理，在 GAIA 基准测试中创下全球最高水平性能记录。
             </p>
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style="animation-delay: 0.6s">
                 <a href="https://manus.im" target="_blank" class="cta-button px-8 py-4 rounded-full text-white font-semibold text-lg flex items-center group">
-                    免费开始使用
+                    <span data-i18n="hero.cta1">免费开始使用</span>
                     <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                     </svg>
                 </a>
-                <a href="#features" class="px-8 py-4 rounded-full border border-gray-600 text-gray-300 font-semibold text-lg hover:border-blue-400 hover:text-white transition-all">
+                <a href="#features" class="px-8 py-4 rounded-full border border-gray-600 text-gray-300 font-semibold text-lg hover:border-blue-400 hover:text-white transition-all" data-i18n="hero.cta2">
                     了解更多
                 </a>
             </div>
@@ -330,16 +329,16 @@
             <!-- Stats -->
             <div class="grid grid-cols-3 gap-8 mt-20 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.8s">
                 <div class="text-center">
-                    <div class="text-3xl md:text-4xl font-bold gradient-text">20亿+</div>
-                    <div class="text-sm text-gray-500 mt-1">美元收购估值</div>
+                    <div class="text-3xl md:text-4xl font-bold gradient-text" data-i18n="hero.stat1">20亿+</div>
+                    <div class="text-sm text-gray-500 mt-1" data-i18n="hero.stat1Label">美元收购估值</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl md:text-4xl font-bold gradient-text">GAIA</div>
-                    <div class="text-sm text-gray-500 mt-1">全球最高性能</div>
+                    <div class="text-3xl md:text-4xl font-bold gradient-text" data-i18n="hero.stat2">GAIA</div>
+                    <div class="text-sm text-gray-500 mt-1" data-i18n="hero.stat2Label">全球最高性能</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl md:text-4xl font-bold gradient-text">2025</div>
-                    <div class="text-sm text-gray-500 mt-1">年度 AI 代理</div>
+                    <div class="text-3xl md:text-4xl font-bold gradient-text" data-i18n="hero.stat3">2025</div>
+                    <div class="text-sm text-gray-500 mt-1" data-i18n="hero.stat3Label">年度 AI 代理</div>
                 </div>
             </div>
         </div>
@@ -361,10 +360,10 @@
             <!-- Section Header -->
             <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                    <span class="text-white">为什么选择 </span>
-                    <span class="gradient-text">Manus？</span>
+                    <span class="text-white" data-i18n="features.title">为什么选择 </span>
+                    <span class="gradient-text" data-i18n="features.titleHighlight">Manus？</span>
                 </h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="features.subtitle">
                     从"对话"到"执行"的质变，让 AI 真正成为你的生产力工具
                 </p>
             </div>
@@ -378,10 +377,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-3">多代理协作架构</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        内部将任务拆解给不同的"小组"协同工作——搜索组、分析组、代码组各司其职，
-                        像一个真正的专业团队在为你服务。
+                    <h3 class="text-2xl font-bold text-white mb-3" data-i18n="features.1.title">多代理协作架构</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="features.1.desc">
+                        内部将任务拆解给不同的"小组"协同工作——搜索组、分析组、代码组各司其职，像一个真正的专业团队在为你服务。
                     </p>
                 </div>
 
@@ -392,10 +390,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-3">闭环执行能力</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        内置云端沙盒环境，能直接编写并运行代码、浏览实时网页。
-                        代码报错了？它会自己查看日志、修改代码直到运行成功。
+                    <h3 class="text-2xl font-bold text-white mb-3" data-i18n="features.2.title">闭环执行能力</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="features.2.desc">
+                        内置云端沙盒环境，能直接编写并运行代码、浏览实时网页。代码报错了？它会自己查看日志、修改代码直到运行成功。
                     </p>
                 </div>
 
@@ -406,10 +403,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-3">高度自主性</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        你只需提供一个模糊的目标，它会自动拆解步骤并执行。
-                        关掉电脑，等它发邮件通知你"活干完了"。
+                    <h3 class="text-2xl font-bold text-white mb-3" data-i18n="features.3.title">高度自主性</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="features.3.desc">
+                        你只需提供一个模糊的目标，它会自动拆解步骤并执行。关掉电脑，等它发邮件通知你"活干完了"。
                     </p>
                 </div>
 
@@ -421,10 +417,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-3">可视化执行过程</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        实时展示正在操作的浏览器界面和终端窗口，
-                        让你清楚看到它如何一步步完成任务——真正的"所见即所得"。
+                    <h3 class="text-2xl font-bold text-white mb-3" data-i18n="features.4.title">可视化执行过程</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="features.4.desc">
+                        实时展示正在操作的浏览器界面和终端窗口，让你清楚看到它如何一步步完成任务——真正的"所见即所得"。
                     </p>
                 </div>
             </div>
@@ -517,10 +512,10 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                    <span class="text-white">能帮你做 </span>
-                    <span class="gradient-text">什么？</span>
+                    <span class="text-white" data-i18n="scenarios.title">能帮你做 </span>
+                    <span class="gradient-text" data-i18n="scenarios.titleHighlight">什么？</span>
                 </h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="scenarios.subtitle">
                     从繁琐的重复工作到复杂的分析任务，让 Manus 帮你节省时间
                 </p>
             </div>
@@ -529,8 +524,8 @@
                 <!-- Scenario 1 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal">
                     <div class="text-4xl mb-4">🔍</div>
-                    <h3 class="text-xl font-bold text-white mb-2">深度调研</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.1.title">深度调研</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.1.desc">
                         对比市场上 5 款主流大模型的定价和技术参数，给出选择建议
                     </p>
                 </div>
@@ -538,8 +533,8 @@
                 <!-- Scenario 2 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.1s">
                     <div class="text-4xl mb-4">📊</div>
-                    <h3 class="text-xl font-bold text-white mb-2">数据处理</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.2.title">数据处理</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.2.desc">
                         上传 Excel，清洗无效数据，根据销售额生成可视化饼图
                     </p>
                 </div>
@@ -547,8 +542,8 @@
                 <!-- Scenario 3 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.2s">
                     <div class="text-4xl mb-4">💻</div>
-                    <h3 class="text-xl font-bold text-white mb-2">编程与部署</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.3.title">编程与部署</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.3.desc">
                         写一个倒计时网页代码，并直接部署上线让你能看到效果
                     </p>
                 </div>
@@ -556,8 +551,8 @@
                 <!-- Scenario 4 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.3s">
                     <div class="text-4xl mb-4">⚡</div>
-                    <h3 class="text-xl font-bold text-white mb-2">自动化办公</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.4.title">自动化办公</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.4.desc">
                         监控股票价格，一旦跌破 X 元，自动发邮件通知你
                     </p>
                 </div>
@@ -565,8 +560,8 @@
                 <!-- Scenario 5 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.4s">
                     <div class="text-4xl mb-4">📈</div>
-                    <h3 class="text-xl font-bold text-white mb-2">竞品分析</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.5.title">竞品分析</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.5.desc">
                         调研 10 家竞争对手，整理数据表格，生成分析报告 PPT
                     </p>
                 </div>
@@ -574,8 +569,8 @@
                 <!-- Scenario 6 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.5s">
                     <div class="text-4xl mb-4">🌐</div>
-                    <h3 class="text-xl font-bold text-white mb-2">网页抓取</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.6.title">网页抓取</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.6.desc">
                         抓取某电商网站的动态价格数据，分析趋势并生成图表
                     </p>
                 </div>
@@ -583,8 +578,8 @@
                 <!-- Scenario 7 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.6s">
                     <div class="text-4xl mb-4">📝</div>
-                    <h3 class="text-xl font-bold text-white mb-2">文档生成</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.7.title">文档生成</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.7.desc">
                         根据调研结果自动生成格式规范的行业报告初稿
                     </p>
                 </div>
@@ -592,8 +587,8 @@
                 <!-- Scenario 8 -->
                 <div class="card-gradient rounded-2xl p-6 hover:scale-105 transition-transform duration-300 reveal" style="animation-delay: 0.7s">
                     <div class="text-4xl mb-4">🔧</div>
-                    <h3 class="text-xl font-bold text-white mb-2">代码审计</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="scenarios.8.title">代码审计</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="scenarios.8.desc">
                         分析 GitHub 仓库代码，找出潜在问题并给出优化建议
                     </p>
                 </div>
@@ -606,10 +601,10 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                    <span class="text-white">选择适合你的 </span>
-                    <span class="gradient-text">方案</span>
+                    <span class="text-white" data-i18n="pricing.title">选择适合你的 </span>
+                    <span class="gradient-text" data-i18n="pricing.titleHighlight">方案</span>
                 </h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="pricing.subtitle">
                     从免费试用到企业级方案，满足不同需求
                 </p>
             </div>
@@ -617,66 +612,66 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Free Plan -->
                 <div class="pricing-card card-gradient rounded-2xl p-6 reveal">
-                    <div class="text-gray-400 font-medium mb-2">免费版</div>
-                    <div class="text-4xl font-bold text-white mb-1">$0</div>
-                    <div class="text-gray-500 text-sm mb-6">永久免费</div>
+                    <div class="text-gray-400 font-medium mb-2" data-i18n="pricing.free.name">免费版</div>
+                    <div class="text-4xl font-bold text-white mb-1" data-i18n="pricing.free.price">$0</div>
+                    <div class="text-gray-500 text-sm mb-6" data-i18n="pricing.free.period">永久免费</div>
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            每日 1 次免费任务
+                            <span data-i18n="pricing.free.f1">每日 1 次免费任务</span>
                         </li>
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            约 300 积分/天
+                            <span data-i18n="pricing.free.f2">约 300 积分/天</span>
                         </li>
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            标准处理速度
+                            <span data-i18n="pricing.free.f3">标准处理速度</span>
                         </li>
                     </ul>
-                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full border border-gray-600 text-gray-300 font-medium hover:border-blue-400 hover:text-white transition-all">
+                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full border border-gray-600 text-gray-300 font-medium hover:border-blue-400 hover:text-white transition-all" data-i18n="pricing.free.cta">
                         开始使用
                     </a>
                 </div>
 
                 <!-- Basic Plan -->
                 <div class="pricing-card card-gradient rounded-2xl p-6 reveal" style="animation-delay: 0.1s">
-                    <div class="text-blue-400 font-medium mb-2">基础版</div>
-                    <div class="text-4xl font-bold text-white mb-1">$19</div>
-                    <div class="text-gray-500 text-sm mb-6">/月</div>
+                    <div class="text-blue-400 font-medium mb-2" data-i18n="pricing.basic.name">基础版</div>
+                    <div class="text-4xl font-bold text-white mb-1" data-i18n="pricing.basic.price">$19</div>
+                    <div class="text-gray-500 text-sm mb-6" data-i18n="pricing.basic.period">/月</div>
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            约 1900 积分/月
+                            <span data-i18n="pricing.basic.f1">约 1900 积分/月</span>
                         </li>
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            每天 2-3 个中等任务
+                            <span data-i18n="pricing.basic.f2">每天 2-3 个中等任务</span>
                         </li>
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            云端浏览器 + 代码沙盒
+                            <span data-i18n="pricing.basic.f3">云端浏览器 + 代码沙盒</span>
                         </li>
                         <li class="flex items-start text-gray-300 text-sm">
                             <svg class="w-5 h-5 text-green-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
-                            完整核心功能
+                            <span data-i18n="pricing.basic.f4">完整核心功能</span>
                         </li>
                     </ul>
-                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full cta-button text-white font-medium">
+                    <a href="https://manus.im" target="_blank" class="block text-center py-3 px-6 rounded-full cta-button text-white font-medium" data-i18n="pricing.basic.cta">
                         最推荐
                     </a>
                 </div>
@@ -1001,17 +996,17 @@
     <section class="py-24 px-4 relative z-10">
         <div class="max-w-4xl mx-auto">
             <div class="card-gradient rounded-3xl p-8 md:p-12 text-center glow-blue reveal">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4" data-i18n="cta.title">
                     准备好体验 AI 数字员工了吗？
                 </h2>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto" data-i18n="cta.subtitle">
                     从今天开始，让繁琐的工作交给 Manus，你专注于更有价值的事情。
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="https://manus.im" target="_blank" class="cta-button px-8 py-4 rounded-full text-white font-semibold text-lg">
+                    <a href="https://manus.im" target="_blank" class="cta-button px-8 py-4 rounded-full text-white font-semibold text-lg" data-i18n="cta.button1">
                         免费开始使用
                     </a>
-                    <a href="#features" class="px-8 py-4 rounded-full border border-gray-600 text-gray-300 font-semibold hover:border-blue-400 hover:text-white transition-all">
+                    <a href="#features" class="px-8 py-4 rounded-full border border-gray-600 text-gray-300 font-semibold hover:border-blue-400 hover:text-white transition-all" data-i18n="cta.button2">
                         了解更多功能
                     </a>
                 </div>
@@ -1026,28 +1021,28 @@
                 <div>
                     <div class="text-2xl font-bold gradient-text mb-4">Manus</div>
                     <p class="text-gray-500 text-sm">
-                        你的 AI 数字员工<br>
-                        交付结果，而非提供建议
+                        <span data-i18n="footer.tagline">你的 AI 数字员工</span><br>
+                        <span data-i18n="footer.tagline2">交付结果，而非提供建议</span>
                     </p>
                 </div>
                 <div>
-                    <h4 class="text-white font-medium mb-4">产品</h4>
+                    <h4 class="text-white font-medium mb-4" data-i18n="footer.product">产品</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#features" class="text-gray-500 hover:text-blue-400 transition-colors">核心特点</a></li>
-                        <li><a href="#pricing" class="text-gray-500 hover:text-blue-400 transition-colors">价格方案</a></li>
-                        <li><a href="https://manus.im" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors">官方网站</a></li>
+                        <li><a href="#features" class="text-gray-500 hover:text-blue-400 transition-colors" data-i18n="footer.link1">核心特点</a></li>
+                        <li><a href="#pricing" class="text-gray-500 hover:text-blue-400 transition-colors" data-i18n="footer.link2">价格方案</a></li>
+                        <li><a href="https://manus.im" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors" data-i18n="footer.link3">官方网站</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-medium mb-4">资源</h4>
+                    <h4 class="text-white font-medium mb-4" data-i18n="footer.resources">资源</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#faq" class="text-gray-500 hover:text-blue-400 transition-colors">常见问题</a></li>
-                        <li><a href="#scenarios" class="text-gray-500 hover:text-blue-400 transition-colors">使用场景</a></li>
-                        <li><a href="https://manus.im" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors">帮助中心</a></li>
+                        <li><a href="#faq" class="text-gray-500 hover:text-blue-400 transition-colors" data-i18n="footer.link4">常见问题</a></li>
+                        <li><a href="#scenarios" class="text-gray-500 hover:text-blue-400 transition-colors" data-i18n="footer.link5">使用场景</a></li>
+                        <li><a href="https://manus.im" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors" data-i18n="footer.link6">帮助中心</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-medium mb-4">关注我们</h4>
+                    <h4 class="text-white font-medium mb-4" data-i18n="footer.follow">关注我们</h4>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -1062,8 +1057,8 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-8 text-center text-gray-600 text-sm">
-                <p>© 2025 Manus. 本站为介绍性网站，非官方网站。</p>
-                <p class="mt-2">Manus 是由 Butterfly Effect（蝴蝶效应）开发的 AI 代理产品，已被 Meta 收购。</p>
+                <p data-i18n="footer.copyright">© 2025 Manus. 本站为介绍性网站，非官方网站。</p>
+                <p class="mt-2" data-i18n="footer.copyright2">Manus 是由 Butterfly Effect（蝴蝶效应）开发的 AI 代理产品，已被 Meta 收购。</p>
             </div>
         </div>
     </footer>
@@ -1088,7 +1083,8 @@
                 'hero.title2': '数字员工',
                 'hero.subtitle1': '不再只是聊天，而是',
                 'hero.subtitle2': '交付结果',
-                'hero.subtitle3': '。给 Manus 一个目标，它会自己去搜索、分析、执行，最终完成任务。',
+                'hero.subtitle3': '。',
+                'hero.subtitle3cont': '给 Manus 一个目标，它会自己去搜索、分析、执行，最终完成任务。',
                 'hero.description': 'Manus 是一款由中国团队 Butterfly Effect 开发的通用型 AI 代理，在 GAIA 基准测试中创下全球最高水平性能记录。',
                 'hero.cta1': '免费开始使用',
                 'hero.cta2': '了解更多',
@@ -1273,7 +1269,8 @@
                 'hero.title2': 'Digital Employee',
                 'hero.subtitle1': 'Not just chat, but ',
                 'hero.subtitle2': 'delivering results',
-                'hero.subtitle3': '. Give Manus a goal, and it will search, analyze, execute, and complete the task.',
+                'hero.subtitle3': '.',
+                'hero.subtitle3cont': '. Give Manus a goal, and it will search, analyze, execute, and complete the task.',
                 'hero.description': 'Manus is a general-purpose AI agent developed by the Chinese team Butterfly Effect, achieving world-record performance on the GAIA benchmark.',
                 'hero.cta1': 'Start Free',
                 'hero.cta2': 'Learn More',
